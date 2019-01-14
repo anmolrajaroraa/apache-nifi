@@ -1,0 +1,86 @@
+1. Decompress and untar
+	bin directory -> ./nifi.sh <command>
+-start -> start NiFi in the background
+-stop -> stop NiFi that's running in background
+-status -> provides you current status of nifi
+-run -> run NiFi in the cmd directly
+-service -> install NiFi as a service
+	service nifi start
+	service nifi stop
+	service nifi status
+
+1. Decompress
+	bin directory -> double-click run-nifi.bat
+
+These directories are created :-
+1. content_repository
+2. database_repository
+3. flowfile_repository
+4. provenance_repository
+5. work directory
+6. logs directory
+
+Go to browser -> localhost:8080/nifi
+
+Apache NiFi was built to manage data flow
+-systems fail
+-data access exceeds capacity to consume
+-noise today can become resource tomorrow
+-boundary conditions
+-compliance and security
+-continuous improvement occurs in production
+
+Core components:-
+1. FlowFile (information packet)
+2. FlowFile Processor
+3. FlowFile Controller (Scheduler)
+4. Process Group
+
+Before zero-master clustering
+
+Zero-master clustering
+
+Cluster is a group of nodes performing same tasks but on different data sets.
+
+Why cluster?
+1. To group all the nodes to increase processing capability
+2. Clustering allows NiFi Administrators or DFM(DataFlow Managers) to have a single interface through which they can make dataflow changes and monitor the dataflow and status of all the nodes
+
+Node - Nodes do the actual processing. Node is just a machine comprising of 3 simple resources - CPU power, RAM, disk space
+
+ZooKeeper - electing Primary Node, electing Cluster Coordinator and acting as a middleware between different nodes so that they can communicate to each other
+
+Cluster Coordinator - managing the nodes, providing up-to-date flow to newly-joining node, replicating the changes to all the nodes in the cluster
+
+Primary Node - Every cluster has one Primary Node. On this node, we can run 'Isolated Processors'. ZooKeeper automatically selects a node to become Primary Node.
+
+Isolated Processors - These processors run in isloated environment on the Primary Node. Eg :- GetSFTP Processor
+
+Heartbeats
+
+Communication within the cluster
+
+Managing the nodes
+
+Flow election
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
