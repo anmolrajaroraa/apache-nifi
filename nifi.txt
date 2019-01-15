@@ -30,15 +30,18 @@ Apache NiFi was built to manage data flow
 -compliance and security
 -continuous improvement occurs in production
 
-Core components:-
+Core components:- (FBP programming)
 1. FlowFile (information packet)
 2. FlowFile Processor
 3. FlowFile Controller (Scheduler)
 4. Process Group
 
 Before zero-master clustering
+Master-slave relationship. Master is single point of failure. If master dies, slaves still keep on working but we cannot manage them or make any changes in the dataflow.
 
 Zero-master clustering
+No master is there. Cluster coordinator was introduced. Primary node and cluster coordinator are selected by zookeeper. No single point of failure.
+
 
 Cluster is a group of nodes performing same tasks but on different data sets.
 
@@ -56,13 +59,20 @@ Primary Node - Every cluster has one Primary Node. On this node, we can run 'Iso
 
 Isolated Processors - These processors run in isloated environment on the Primary Node. Eg :- GetSFTP Processor
 
-Heartbeats
+Heartbeats - Nodes emit health and status check after every 5 seconds to the cluster coordinator to let it know that they are working in sync and are alive
 
 Communication within the cluster
 
 Managing the nodes
 
 Flow election
+
+
+
+
+
+
+
 
 
 
