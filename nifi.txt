@@ -65,10 +65,40 @@ Communication within the cluster
 
 Managing the nodes
 
+Steps to decommission a node:-
+1. Disconnect the node
+2. Offload the node
+3. Delete the node
+4. Restart nifi service 
+
+NiFi Toolkit
+- nifi get-node
+- nifi get-nodes
+- nifi connect-node
+- nifi disconnect-node
+- nifi offload-node
+- nifi delete-node
+
 Flow election
+When a cluster first starts up, voting is done for the copy of flows submitted by nodes to the cluster coordinator. If two flows match. a vote is casted. And the flow having majority of votes is selected as cluster's flow. All the nodes not having this flow are disconnected and are provided with a copy of up-to-date flow to become compatible to cluster's flow.
+If no flow gets majority, cluster coordinator selects the correct flow and rest of the procedure is same.
+nifi.cluster.flow.max.candidtates = <number>
+nifi.cluster.flow.max.wait.time = <time>
 
+Steps to setup a cluster
+nifi.cluster.is.node = true
+nifi.web.http.port = <port-number> (should be different for all nodes)
+nifi.zookeeper.connect.string = localhost:2181
+nifi.zookeeper.embedded.start = true (only on a single node)
+nifi.cluster.load.balance.port=6342 (should be diff. for all nodes)
+In zookeeper.properties -> server.1=localhost:2888:3888
 
+DataFlow Manager - A NiFi user who has permissions to add, remove and modify components of a NiFi dataflow.
 
+FlowFile - FlowFile represents a single piece of data. FlowFile is made up of two components - content (data that is represented by FlowFile), attributes(characteristics about data, metadata)
+- uuid - unique identifier for FlowFile
+- filename - human-readable name used while storing FlowFiles
+- path - complete heirarchy path to the location where FlowFile was stored
 
 
 
