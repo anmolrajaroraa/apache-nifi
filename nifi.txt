@@ -100,6 +100,26 @@ FlowFile - FlowFile represents a single piece of data. FlowFile is made up of tw
 - filename - human-readable name used while storing FlowFiles
 - path - complete heirarchy path to the location where FlowFile was stored
 
+Processor - A NiFi component that can pull, publish, route, transform data and extract information from FlowFiles.
+
+Relationship - Processor can have 0 or more relationships. Relationships have names to indicate the result of processing a FlowFile. Eg:- success. After processing, flowfile is routed to the relationship. DFM can use these relationships to specify where the files should go based on the processing result.
+
+Connection - We join components using connections. Connections consist of one or more relationships. We can specify which relationship is to be used for a particular connection. This provides us an ability to transfer flowfile in differnet ways to different destinations based on processing outcome. Connections houses FlowFile Queue.
+
+Controller Service - They are extension points. Commonly used Controller Service is StandardSSLContextService
+The idea behind extension point is to configure information in Controller Service rather than doing it on every processor.
+
+Reporting Task - Tasks that run in background and provide stats about what is going on in a NiFi instance
+ControllerStatusReportingTask
+MonitorDiskUsage
+MonitorMemory
+
+Funnel - A component that is used to combine data from several Connections into a single connection.
+
+Process Group - NiFi allows us to group multiple processors in a Process Group to ease the visibility on canvas and to allow us to manipulate our processors more easily. It's beneficial only when we have complex dataflow and large number of components.
+
+
+
 
 
 
