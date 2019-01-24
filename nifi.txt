@@ -86,12 +86,33 @@ nifi.cluster.flow.max.candidtates = <number>
 nifi.cluster.flow.max.wait.time = <time>
 
 Steps to setup a cluster
-nifi.cluster.is.node = true
-nifi.web.http.port = <port-number> (should be different for all nodes)
-nifi.zookeeper.connect.string = localhost:2181
-nifi.zookeeper.embedded.start = true (only on a single node)
-nifi.cluster.load.balance.port=6342 (should be diff. for all nodes)
-In zookeeper.properties -> server.1=localhost:2888:3888
+1. Edit /etc/hosts file on both the machines
+192.168.56.1	node1 (if it doesnt works use local ip of VM)
+192.168.1.76	node2
+
+2. Edit zookeeper.prop
+Change clientport if you want to
+
+server.1=node1:2888:3888
+
+server.2=node2:2888:3888
+
+echo 1 > ./state/zookeeper/myid
+
+3. In nifi.properties
+nifi.state.management.embedded.zookeeper.start=true
+nifi.remote.input.host=node2
+nifi.remote.input.socket.port=9998
+nifi.web.http.host=node2
+
+nifi.web.http.port=8010
+nifi.cluster.is.node=true
+nifi.cluster.node.address=node2
+nifi.cluster.node.protocol.port=9999
+nifi.cluster.flow.election.max.candidates=2
+nifi.zookeeper.connect.string=node1:2181,node2:2182
+
+
 
 DataFlow Manager - A NiFi user who has permissions to add, remove and modify components of a NiFi dataflow.
 
@@ -117,6 +138,35 @@ MonitorMemory
 Funnel - A component that is used to combine data from several Connections into a single connection.
 
 Process Group - NiFi allows us to group multiple processors in a Process Group to ease the visibility on canvas and to allow us to manipulate our processors more easily. It's beneficial only when we have complex dataflow and large number of components.
+
+Port - Process Groups need a way to connect to each other. Input and output ports are present there.
+
+Remote Process Group - Sometimes we want to transfer data from one instance of NiFi to another instance, remote process groups are the way to doing this.
+
+CRON expression
+
+1. seconds	0-59
+2. minutes	0-59
+3. hours	0-23
+4. day of month	1-31
+5. month	1-12 or JAN-DEC
+6. day of week	1-7 or SUN-SAT
+7. (optional) year	empty or 2019-2030
+
+
+Number(10), Range(1-10), Increment(0/15 -> 0, 15, 30, 45)
+
+* - all values are valid
+? - no specific value has been given  (valid only for days of month and week)
+L - select the last occurence of this particular value
+
+0 0 13 * * ? -> At 1pm daily
+0 15 13 ? * 2-6 -> From monday-friday at 1:15 pm
+0 15 13 ? * 6L 2019-2022 -> From 2019-2022, on last friday of every month at 1:15 pm
+*****? - every second
+
+
+anmolarora1711@gmail.com
 
 
 
